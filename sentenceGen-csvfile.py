@@ -55,7 +55,7 @@ if __name__ == '__main__':
     f = open('/home/lychan/eclipse-workspace/DataGenerator/data/tradeportal-LC-2/portal&LC.csv', 'r')
     g = open('/home/lychan/eclipse-workspace/DataGenerator/data/tradeportal-LC-2/scheme.csv', 'r')
     h = open('/home/lychan/eclipse-workspace/DataGenerator/data/tradeportal-LC-2/portal-LC.txt', 'w')
-    count = 2000
+    count = 30
 
     f.readline()
     g.readline()
@@ -83,6 +83,7 @@ if __name__ == '__main__':
 
         if current_cluster != cluster:
             writeSentences(h, cluster, selected_sentences, count)
+            selected_sentences.clear()
             cluster = current_cluster
 
         for scheme_type in scheme[current_type]:
