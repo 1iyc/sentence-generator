@@ -37,6 +37,7 @@ def writeSentences(file, cluster, sentences, count):
 
     for sentence in sentences:
         file.write(f"{cluster}\t{sentence}")
+    print(f"{cluster} writed")
 
 
 def selectSentences(sentences, scheme_words):
@@ -54,8 +55,8 @@ if __name__ == '__main__':
 
     f = open('/home/lychan/eclipse-workspace/DataGenerator/data/tradeportal-LC-2/portal&LC.csv', 'r')
     g = open('/home/lychan/eclipse-workspace/DataGenerator/data/tradeportal-LC-2/scheme.csv', 'r')
-    h = open('/home/lychan/eclipse-workspace/DataGenerator/data/tradeportal-LC-2/portal-LC.txt', 'w')
-    count = 30
+    h = open('/home/lychan/eclipse-workspace/DataGenerator/data/tradeportal-LC-2/portal-LC_per100.txt', 'w')
+    count = 100
 
     f.readline()
     g.readline()
