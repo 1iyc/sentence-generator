@@ -19,14 +19,14 @@ def exportPermutedSentence(words, count):
             for permuted in itertools.permutations(words.split(' ')):
                 selected_permuted_words.append(' '.join(permuted))
         if count % max_count:
-            selected_permuted_words.append(
+            selected_permuted_words.extend(
                 random.sample(selected_permuted_words, count % max_count))
 
     return selected_permuted_words
 
 
 def makeSentence(main_words, scheme_words):
-    if scheme_type[0] is '^':
+    if scheme_words[0] is '^':
         return f"{main_words}{scheme_words[1:]}"
     else:
         return f"{main_words} {scheme_words}"
@@ -35,9 +35,10 @@ def writeSentences(file, cluster, sentences, count):
     if len(selected_sentences) > count:
         sentences = random.sample(sentences, count)
 
+    print(f"{cluster} is writing...")
+
     for sentence in sentences:
         file.write(f"{cluster}\t{sentence}")
-    print(f"{cluster} writed")
 
 
 def selectSentences(sentences, scheme_words):
@@ -53,10 +54,10 @@ if __name__ == '__main__':
 #    h = open(sys.argv[3], 'w')
 #    count = sys.argv[4]
 
-    f = open('/home/lychan/eclipse-workspace/DataGenerator/data/tradeportal-LC-2/portal&LC.csv', 'r')
+    f = open('/home/lychan/eclipse-workspace/DataGenerator/data/tradeportal-LC-2/portal&LC&CA.csv', 'r')
     g = open('/home/lychan/eclipse-workspace/DataGenerator/data/tradeportal-LC-2/scheme.csv', 'r')
-    h = open('/home/lychan/eclipse-workspace/DataGenerator/data/tradeportal-LC-2/portal-LC_per100.txt', 'w')
-    count = 100
+    h = open('/home/lychan/eclipse-workspace/DataGenerator/data/tradeportal-LC-2/portal-LC&CA_per10.txt', 'w')
+    count = 10
 
     f.readline()
     g.readline()
@@ -86,9 +87,9 @@ if __name__ == '__main__':
             writeSentences(h, cluster, selected_sentences, count)
             selected_sentences.clear()
             cluster = current_cluster
+        else:
+            selected_sentences.extend(selectSentences(exportPermutedSentence(current_words, count), scheme[current_type]))
 
         for scheme_type in scheme[current_type]:
             h.write(f"{current_cluster}\t{makeSentence(current_words, scheme_type)}")
 
-        else:
-            selected_sentences.extend(selectSentences(exportPermutedSentence(current_words, count), scheme[current_type]))
